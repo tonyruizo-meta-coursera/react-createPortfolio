@@ -8,8 +8,6 @@ import {
   faStackOverflow,
 } from "@fortawesome/free-brands-svg-icons";
 import { Box, HStack } from "@chakra-ui/react";
-import ProjectsSection from "./ProjectsSection";
-import ContactMeSection from "./ContactMeSection";
 
 const socials = [
   {
