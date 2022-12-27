@@ -40,11 +40,11 @@ const LandingSection = () => {
     validationSchema: Yup.object({
       firstName: Yup.string()
         .min(2, "Too Short!")
-        .max(50, "Too Long!")
+        .max(30, "Too Long!")
         .required("Required"),
       email: Yup.string().email("Invalid email").required("Required"),
       type: Yup.string().required("Required"),
-      comment: Yup.string().required("Required"),
+      comment: Yup.string().max(520, "Too long").required("Required"),
     }),
   });
 
@@ -107,7 +107,12 @@ const LandingSection = () => {
                 />
                 <FormErrorMessage>{formik.errors.comment}</FormErrorMessage>
               </FormControl>
-              <Button type="submit" colorScheme="purple" width="full">
+              <Button
+                type="submit"
+                colorScheme="purple"
+                width="full"
+                isLoading={isLoading}
+              >
                 Submit
               </Button>
             </VStack>
