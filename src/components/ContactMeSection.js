@@ -29,12 +29,7 @@ const LandingSection = () => {
       comment: "",
     },
     onSubmit: (values) => {
-      submit("url", values).then(() => {
-        if (response.type === "success") {
-          onOpen(response.type, response.message);
-        }
-        formik.resetForm();
-      });
+      submit("https://example.com/contactme", values);
     },
     validationSchema: Yup.object({
       firstName: Yup.string()
@@ -49,6 +44,15 @@ const LandingSection = () => {
         .required("Required"),
     }),
   });
+
+  useEffect(() => {
+    if (response) {
+      onOpen(response.type, response.message);
+      if (response.type === "success") {
+        formik.resetForm();
+      }
+    }
+  }, [response]);
 
   return (
     <FullScreenSection
@@ -65,7 +69,9 @@ const LandingSection = () => {
           <form onSubmit={formik.handleSubmit}>
             <VStack spacing={4}>
               <FormControl
-                isInvalid={formik.touched.firstName && formik.errors.firstName}
+                isInvalid={
+                  !!formik.touched.firstName && formik.errors.firstName
+                }
               >
                 <FormLabel htmlFor="firstName">Name</FormLabel>
                 <Input
@@ -78,7 +84,7 @@ const LandingSection = () => {
                 <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
               </FormControl>
               <FormControl
-                isInvalid={formik.touched.email && formik.errors.email}
+                isInvalid={!!formik.touched.email && formik.errors.email}
               >
                 <FormLabel htmlFor="email">Email Address</FormLabel>
                 <Input
@@ -102,7 +108,7 @@ const LandingSection = () => {
                 </Select>
               </FormControl>
               <FormControl
-                isInvalid={formik.touched.comment && formik.errors.comment}
+                isInvalid={!!formik.touched.comment && formik.errors.comment}
               >
                 <FormLabel htmlFor="comment">Your message</FormLabel>
                 <Textarea
